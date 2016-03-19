@@ -12,6 +12,7 @@ import (
 	"go.iondynamics.net/siteMgr"
 	"go.iondynamics.net/siteMgr/encoder"
 	"go.iondynamics.net/siteMgr/protocol/msgType"
+	"go.iondynamics.net/siteMgrServer/backup"
 	"go.iondynamics.net/siteMgrServer/registry"
 	"go.iondynamics.net/siteMgrServer/session"
 	"go.iondynamics.net/siteMgrServer/srv"
@@ -149,14 +150,8 @@ func Init(e *echo.Echo) {
 		}
 		c.Response().Header().Set("Content-Disposition", "attachment; filename=\""+usr.Name+"_"+time.Now().Format("06_01_02_15_04")+".json\"")
 		c.Response().Header().Set("Content-type", "application/json")
-		enc := json.NewEncoder(c.Response())
-		err := enc.Encode(usr.GetSites())
-		if err != nil {
-			return err
-		}
-		c.Response().Flush()
 
-		return nil
+		return c.JSON(http.StatusOK, backup.Create(usr))
 	})
 
 	e.Post("/backup/recover", func(c *echo.Context) error {
@@ -170,21 +165,15 @@ func Init(e *echo.Echo) {
 			return err
 		}
 
-		sites := []siteMgr.Site{}
+		bak := &backup.Data{}
+
 		dec := json.NewDecoder(file)
-		err = dec.Decode(&sites)
+		err = dec.Decode(bak)
 		if err != nil {
 			return err
 		}
 
-		idl.Debug(sites)
-
-		for _, site := range sites {
-			err = usr.SetSite(site)
-			if err != nil {
-				return err
-			}
-		}
+		backup.Restore(usr, bak)
 
 		return c.Redirect(http.StatusFound, "/backup/mgr")
 	})

@@ -43,7 +43,7 @@ var (
 		CmdName:        "siteMgr-server", // app name
 	}
 
-	VERSION            = "0.9.0"
+	VERSION            = "0.9.1"
 	protocolConstraint = ">= 0.7.0"
 
 	cert tls.Certificate
@@ -62,6 +62,7 @@ func main() {
 
 	VERSION = strings.TrimPrefix(strings.TrimSuffix(strings.TrimSpace(VERSION), "'"), "'")
 	idl.Info("Version: ", VERSION)
+	idl.Info("Protocol: ", protocol.Version)
 
 	if *pemCertPath == "" || *pemKeyPath == "" {
 		idl.Emerg("Specify --pemCertPath and --pemKeyPath")
