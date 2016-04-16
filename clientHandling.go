@@ -117,6 +117,10 @@ recvLoop:
 			}
 			setConnectionInfo(usr, conInfo, c, send)
 
+		case msgType.HEARTBEAT:
+			idl.Debug(msg)
+			//omit message
+
 		default:
 			errCount++
 			idl.Warn("msg not handled", msg)

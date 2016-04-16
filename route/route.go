@@ -216,7 +216,7 @@ func Init(e *echo.Echo) {
 
 		ch := registry.Get(usr.Name)
 		if ch == nil {
-			return c.Render(http.StatusOK, "clientGet.tpl", usr)
+			return c.Render(http.StatusOK, "noClientGet.tpl", usr)
 		}
 
 		cred, err := encoder.Do(siteMgr.Credentials{
