@@ -78,7 +78,7 @@ func init() {
 	// register embeddedBox
 	embedded.RegisterEmbeddedBox(`files`, &embedded.EmbeddedBox{
 		Name: `files`,
-		Time: time.Unix(1458421807, 0),
+		Time: time.Unix(1460799186, 0),
 		Dirs: map[string]*embedded.EmbeddedDir{
 			"": dir1,
 		},

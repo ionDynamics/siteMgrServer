@@ -73,7 +73,7 @@ func Init(e *echo.Echo) {
 		}
 
 		if registry.Get(usr.Name) == nil {
-			return c.Render(http.StatusOK, "clientGet.tpl", usr)
+			return c.Render(http.StatusOK, "noClientGet.tpl", usr)
 		}
 
 		return c.Render(http.StatusOK, "siteListGet.tpl", usr)
