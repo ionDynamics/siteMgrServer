@@ -43,7 +43,7 @@ var (
 		CmdName:        "siteMgr-server", // app name
 	}
 
-	VERSION            = "0.9.3"
+	VERSION            = "0.9.4"
 	protocolConstraint = ">= 0.7.0"
 
 	cert tls.Certificate
